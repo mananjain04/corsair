@@ -137,11 +137,12 @@ export const removeItem: SpotifyEndpoints['playlistsRemoveItem'] = async (
 	ctx,
 	input,
 ) => {
+	const { playlist_id, ...body } = input;
 	const result = await makeAuthenticatedSpotifyRequest<
 		SpotifyEndpointOutputs['playlistsRemoveItem']
-	>(`playlists/${input.playlist_id}/tracks`, ctx, {
+	>(`playlists/${playlist_id}/tracks`, ctx, {
 		method: 'DELETE',
-		body: input,
+		body,
 	});
 
 	await logEventFromContext(
