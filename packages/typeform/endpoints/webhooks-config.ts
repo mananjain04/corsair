@@ -102,7 +102,7 @@ export const deleteWebhookConfig: TypeformEndpoints['webhooksConfigDelete'] =
 				const existing = await ctx.db.webhookConfigs.search({
 					data: { tag: input.tag, form_id: input.form_id },
 				});
-				webhookEntityId = existing[0]?.id;
+				webhookEntityId = existing[0]?.entity_id;
 			} catch {
 				// ignore — best-effort pre-fetch
 			}
