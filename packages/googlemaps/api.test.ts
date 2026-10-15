@@ -326,6 +326,27 @@ describe('Google Maps Plugin API Tests', () => {
 		expect(lastBody.units).toBeUndefined();
 	});
 
+	it('routes.distanceMatrix correctly converts millisecond departure_time (#1871)', async () => {
+		const plugin = googlemaps();
+		mockedMakeRequest.mockResolvedValueOnce([]);
+
+		await plugin.endpoints!.routes.distanceMatrix(dummyOAuthCtx, {
+			origins: 'SF',
+			destinations: 'Oakland',
+			departure_time: '1700000000000',
+		});
+
+		expect(mockedMakeRequest).toHaveBeenLastCalledWith(
+			'/distanceMatrix/v1:computeRouteMatrix',
+			dummyOAuthCtx,
+			expect.objectContaining({
+				body: expect.objectContaining({
+					departureTime: '2023-11-14T22:13:20.000Z',
+				}),
+			}),
+		);
+	});
+
 	it('routes.getDirection calculates directions (api_key and oauth)', async () => {
 		const plugin = googlemaps();
 		mockedMakeRequest.mockResolvedValueOnce({

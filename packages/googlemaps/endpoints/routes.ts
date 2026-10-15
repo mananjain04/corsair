@@ -35,7 +35,9 @@ function toRoutesTravelMode(mode?: string): string {
 function toRoutesDepartureTime(departure_time?: string): string | undefined {
 	if (!departure_time || departure_time === 'now') return undefined;
 	if (/^\d+$/.test(departure_time)) {
-		return new Date(Number(departure_time) * 1000).toISOString();
+		const num = Number(departure_time);
+		const ms = num >= 1e11 ? num : num * 1000;
+		return new Date(ms).toISOString();
 	}
 	return departure_time;
 }
