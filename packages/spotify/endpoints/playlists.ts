@@ -157,7 +157,10 @@ export const search: SpotifyEndpoints['playlistsSearch'] = async (
 	ctx,
 	input,
 ) => {
-	const query: Record<string, string | number | undefined> = { ...input };
+	const query: Record<string, string | number | undefined> = {
+		...input,
+		type: input.type || 'playlist',
+	};
 
 	const result = await makeAuthenticatedSpotifyRequest<
 		SpotifyEndpointOutputs['playlistsSearch']

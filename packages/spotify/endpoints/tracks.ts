@@ -50,7 +50,10 @@ export const getAudioFeatures: SpotifyEndpoints['tracksGetAudioFeatures'] =
 	};
 
 export const search: SpotifyEndpoints['tracksSearch'] = async (ctx, input) => {
-	const query: Record<string, string | number | undefined> = { ...input };
+	const query: Record<string, string | number | undefined> = {
+		...input,
+		type: input.type || 'track',
+	};
 
 	const result = await makeAuthenticatedSpotifyRequest<
 		SpotifyEndpointOutputs['tracksSearch']
